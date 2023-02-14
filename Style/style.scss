@@ -1,0 +1,313 @@
+@mixin mobile {
+    @media screen and (max-width: 770px) {
+        @content;
+    }
+}
+
+/* RESET */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+/* MAIN */
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #64748b;
+}
+
+.container {
+    background-color: #334155;
+    border-radius: 20px;
+    box-shadow: 0 10px 18px rgba(0, 0, 0, .3);
+    padding: 1.3rem;
+
+    @include mobile {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 0;
+    }
+
+    header {
+        display: flex;
+        color: #fff;
+         border-bottom: 1px solid #515155;
+         justify-content: space-between;
+        h1 {
+            font-size: 1.5rem;
+
+            margin-right: .7rem;
+
+            @include mobile {
+                display: block;
+                margin-bottom: .5rem;
+            }
+        }
+    
+
+    .cinema {
+        width: fit-content;
+        display: block;
+        text-decoration: none;
+        font-size: 1.1rem;
+        color: #bbb;
+        margin: .35rem 0 1rem 0;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        @include mobile {
+            margin-top: .7rem;
+        }
+    }
+    .date {
+        font-size: 1.25rem;
+    
+    }
+}
+
+.movie-theater {
+    padding: 3rem 0;
+    perspective: 900px;
+    width: min-content;
+
+    @include mobile {
+        width: 100%;
+    }
+
+    .screen {
+        width: 100%;
+        height: 108px;
+        transform: rotateX(-25deg) scale(.8);
+        margin-bottom: -.5rem;
+        position: relative;
+        object-fit: cover;
+        image-rendering: pixelated;
+        box-shadow: 0 50px 32px -30px rgba(255, 255, 255, .2);
+
+        @include mobile {
+            height: 90px;
+        }
+    }
+
+    .seats {
+        display: grid;
+        place-items: center;
+        grid-template: repeat(4, 1fr) / repeat(12, 1fr);
+        gap: 2.1rem 2.6rem;
+        width: fit-content;
+        transform: rotateX(35deg) scale(.87);
+
+        @include mobile {
+            gap: .8rem;
+            width: 100%;
+            transform: rotateX(35deg) scale(1);
+        }
+
+        div {
+            width: fit-content;
+        }
+
+        .row-index {
+            font-size: .95rem;
+            color: #bbb;
+            margin-top: 5px;
+
+            @include mobile {
+                font-size: .5rem;
+            }
+
+            &:nth-child(1) {
+                grid-row: 1;
+            }
+
+            &:nth-child(2) {
+                grid-row: 2;
+            }
+
+            &:nth-child(3) {
+                grid-row: 3;
+            }
+
+            &:nth-child(4) {
+                grid-row: 4;
+            }
+
+            &:nth-child(5) {
+                grid-row: 1;
+                grid-column: 12;
+            }
+
+            &:nth-child(6) {
+                grid-row: 2;
+                grid-column: 12;
+            }
+
+            &:nth-child(7) {
+                grid-row: 3;
+                grid-column: 12;
+            }
+
+            &:nth-child(8) {
+                grid-row: 4;
+                grid-column: 12;
+            }
+        }
+
+        .seat {
+            cursor: pointer;
+            display: block;
+            color: transparent;
+            font-weight: 500;
+            font-size: .9rem;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            position: relative;
+            transition: color .14s;
+
+            @include mobile {
+                font-size: .5rem;
+                width: 16px;
+                height: 16px;
+                line-height: 16px;
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                top: -6px;
+                left: -6px;
+                transform: scale(0);
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                border: 2px solid #4EAAFF;
+                transition: transform .1s;
+
+                @include mobile {
+                    top: -5px;
+                    left: -5px;
+                    width: 22px;
+                    height: 22px;
+                }
+            }
+
+
+            &.standard {
+                background-color: #4EAAFF;
+            }
+
+            &.vip {
+                background-color: #66D258;
+
+                &::after {
+                    border-color: #66D258;
+                }
+            }
+
+            &:hover {
+                color: #fff;
+            }
+
+            &:hover::after {
+                transform: scale(1);
+            }
+        }
+
+        .seat-box {
+            .input {
+                display: none;
+            }
+
+            .input:checked+.seat {
+                color: #fff;
+            }
+
+            .input:checked+.seat::after {
+                transform: scale(1);
+            }
+        }
+    }
+
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1.1rem;
+    border-top: 1px solid #515155;
+
+    .legend span {
+        color: #bbb;
+        font-size: .9rem;
+        margin: 0 1.2rem;
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -19px;
+            transform: translateY(-50%);
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+        }
+
+        &.standard-price::before {
+            background-color: #4EAAFF;
+        }
+
+        &.vip-price::before {
+            background-color: #66D258;
+        }
+
+        @include mobile {
+            display: block;
+
+            &:first-child {
+                margin-bottom: .2rem;
+            }
+        }
+    }
+
+    .done-btn {
+        outline: none;
+        border: none;
+        text-transform: uppercase;
+        color: #fff;
+        border-radius: 4px;
+        font-size: .9rem;
+        cursor: pointer;
+        background-color: #3398DC;
+        padding: .65rem 1rem;
+        transition: background-color .1s;
+
+        &:hover {
+            background-color: #277cb4;
+        }
+
+        @include mobile {
+            padding: .65rem 3rem;
+        }
+    }
+}
+         
+
+    }
+
+
+
